@@ -3,16 +3,29 @@ const conn = require("../db/config");
 
 router.post('/', (req, res) => {
     const { title, pageqty } = req.body;
-    const query = `INSERT INTO books (title, pageqty) VALUES ('${title}', '${pageqty}')`;
+    const sql = `INSERT INTO books (title, pageqty) VALUES ('${title}', '${pageqty}')`;
     
-    conn.query(query, (err) => {
+    conn.query(sql, (err) => {
         if(err){
             console.log('err:', err);
             return res.status(500).send({ message: `err: ${err}`});
         }
 
-        console.log('boock created', title);
+        console.log('book created', title);
         return res.status(201).send({ message: "success" });
+    })
+})
+
+router.get('/', (req, res) => {
+    const sql = `SELECT * FROM books`;
+
+    conn.query(sql, (err, data) => {
+        if(err){
+            console.log('err:', err);
+            return res.status(500).send({ message: `err: ${err}`});
+        }
+
+        return res.status(200).send(data);
     })
 })
 
