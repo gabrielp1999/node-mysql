@@ -45,4 +45,20 @@ router.get('/:id', (req, res) => {
     })
 })
 
+router.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const { title, pageqty } = req.body;
+
+    const sql = `UPDATE books SET title = '${title}', pageqty = '${pageqty}'  WHERE id = ${id}`;
+
+    conn.query(sql, (err) => {
+        if(err){
+            console.log('err:', err);
+            return res.status(500).send({ message: `err: ${err}`});
+        }
+
+        return res.status(200).send({ message: "success" });
+    })
+})
+
 module.exports = router;
