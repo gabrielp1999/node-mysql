@@ -61,4 +61,19 @@ router.put('/:id', (req, res) => {
     })
 })
 
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+
+    const sql = `DELETE FROM books WHERE id = ${id}`;
+
+    conn.query(sql, (err) => {
+        if(err){
+            console.log('err:', err);
+            return res.status(500).send({ message: `err: ${err}`});
+        }
+
+        return res.status(200).send({ message: "success" });
+    })
+})
+
 module.exports = router;
