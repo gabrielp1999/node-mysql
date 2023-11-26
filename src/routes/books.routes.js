@@ -29,4 +29,20 @@ router.get('/', (req, res) => {
     })
 })
 
+
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+
+    const sql = `SELECT * FROM books WHERE id = ${id}`;
+
+    conn.query(sql, (err, data) => {
+        if(err){
+            console.log('err:', err);
+            return res.status(500).send({ message: `err: ${err}`});
+        }
+
+        return res.status(200).send(data);
+    })
+})
+
 module.exports = router;
